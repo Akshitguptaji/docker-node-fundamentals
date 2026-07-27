@@ -7,20 +7,29 @@ The application logic is intentionally minimal to focus strictly on infrastructu
 ## 🏗️ Cloud Architecture Flow
 
 ```text
-[ Client Request ]
-│
-▼
-[ AWS Application Load Balancer (Port 80) ]
-│
-▼
-[ Target Group (Port 3000) ]
-│
-▼
-[ AWS ECS Task / Container (Express.js) ]
+[Internet / Users]
+       │
+       ▼  (HTTP : 80)
+┌─────────────────────────────┐
+│  AWS Application Load       │
+│  Balancer (ALB)             │
+└──────────────┬──────────────┘
+               │ (Traffic Routing)
+               ▼
+┌─────────────────────────────┐
+│  AWS ECS Cluster            │
+│                             │
+│  ┌───────────────────────┐  │
+│  │ Docker Container      │  │
+│  │ Node.js Express App   │  │
+│  │ (Port : 3000)         │  │
+│  └───────────────────────┘  │
+└─────────────────────────────┘
 ```
 
 ⚙️ Core Infrastructure Implemented
 🐳 Local Docker Environment
+
 Optimized Image Size: Configured multi-stage builds to strictly separate the development/build environment from the final production image.
 
 Rapid Rebuilds: Layered Dockerfile instructions strategically to maximize Docker's internal caching mechanism.
@@ -30,6 +39,7 @@ Developer Experience (DX): Integrated volume bind mounts via docker-compose.yml 
 Isolated Networking: Deployed a custom bridge network (my-net) for secure and isolated container-to-container communication.
 
 ☁️ AWS Cloud Deployment
+
 Container Registry: Built and pushed the optimized Docker image to Amazon ECR.
 
 Container Orchestration: Deployed the application using AWS ECS with custom Task Definitions to manage the container lifecycle.
@@ -43,13 +53,12 @@ Bash
 
 # Clone and spin up the environment
 
-git clone [https://github.com/your-username/repo-name.git](https://github.com/your-username/repo-name.git)
+git clone [https://github.com/Akshitguptaji/docker-node-fundamentals.git](https://github.com/Akshitguptaji/docker-node-fundamentals.git)
 cd repo-name
 
 # Run the container in detached mode
 
 docker compose up -d
 
-## 📸 Live Deployment Proof
-
+📸 Live Deployment Proof
 ![AWS ECS Output](screenshot.png)
