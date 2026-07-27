@@ -1,11 +1,12 @@
-# Dockerized Node.js Architecture & AWS ECS Deployment 🐳☁️
+# 🐳 Node.js Docker & AWS ECS Architecture ☁️
 
-A lightweight, fully containerized Node.js environment designed to implement core DevOps practices — from optimized local containerization to production-ready cloud deployment on AWS ECS with Load Balancing.
+A full-stack DevOps project demonstrating the containerization of a Node.js Express application and its production deployment to AWS Elastic Container Service (ECS).
 
----
+The application logic is intentionally minimal to focus strictly on infrastructure, image optimization, container orchestration, and cloud networking.
 
-## 🏗️ Cloud Deployment Architecture (AWS)
+## 🏗️ Cloud Architecture Flow
 
+```text
 [ Client Request ]
 │
 ▼
@@ -16,34 +17,35 @@ A lightweight, fully containerized Node.js environment designed to implement cor
 │
 ▼
 [ AWS ECS Task / Container (Express.js) ]
+```
 
-- **Container Registry:** Pushed optimized Docker images to **Amazon ECR**.
-- **Container Orchestration:** Deployed on **AWS ECS** using custom Task Definitions and Service revisions.
-- **Traffic Routing & Health:** Configured an **Application Load Balancer (ALB)** with active Target Group health checks.
-- **Port Mapping & Config:** Dynamic environment variable injection (`PORT=3000`) across container revisions.
+⚙️ Core Infrastructure Implemented
+🐳 Local Docker Environment
+Optimized Image Size: Configured multi-stage builds to strictly separate the development/build environment from the final production image.
 
----
+Rapid Rebuilds: Layered Dockerfile instructions strategically to maximize Docker's internal caching mechanism.
 
-## ⚙️ Local Infrastructure & Core Features
+Developer Experience (DX): Integrated volume bind mounts via docker-compose.yml to enable instant code reloading without rebuilding containers.
 
-- **Optimized Image Size:** Configured multi-stage builds to strictly separate the development/build environment from the final production image.
-- **Rapid Rebuilds:** Layered `Dockerfile` instructions strategically to maximize Docker's internal caching mechanism.
-- **Developer Experience (DX):** Integrated volume bind mounts via `docker-compose.yml` to enable instant code reloading without rebuilding containers.
-- **Isolated Networking:** Deployed a custom bridge network (`my-net`) for secure and isolated container-to-container communication.
+Isolated Networking: Deployed a custom bridge network (my-net) for secure and isolated container-to-container communication.
 
----
+☁️ AWS Cloud Deployment
+Container Registry: Built and pushed the optimized Docker image to Amazon ECR.
 
-## 🚀 Quick Start (Local)
+Container Orchestration: Deployed the application using AWS ECS with custom Task Definitions to manage the container lifecycle.
 
-```bash
+Environment Management: Dynamically injected environment variables (e.g., PORT=3000) securely through ECS Task revisions.
+
+Traffic Management & Health Checks: Configured an Application Load Balancer (ALB) and Target Groups with active health checks to seamlessly route internet traffic (Port 80) to the application containers (Port 3000).
+
+🚀 Quick Start (Local Development)
+Bash
+
 # Clone and spin up the environment
+
 git clone [https://github.com/your-username/repo-name.git](https://github.com/your-username/repo-name.git)
 cd repo-name
+
+# Run the container in detached mode
+
 docker compose up -d
-```
-🛠️ AWS Services & Tech Stack
-Runtime: Node.js, Express.js
-
-Containers: Docker, Docker Compose
-
-Cloud Infrastructure: AWS ECR, AWS ECS, AWS Application Load Balancer (ALB), AWS VPC Security Groups
