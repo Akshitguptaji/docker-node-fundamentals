@@ -27,38 +27,32 @@ The application logic is intentionally minimal to focus strictly on infrastructu
 └─────────────────────────────┘
 ```
 
-⚙️ Core Infrastructure Implemented
-🐳 Local Docker Environment
+## ⚙️ Core Infrastructure Implemented
 
-Optimized Image Size: Configured multi-stage builds to strictly separate the development/build environment from the final production image.
+**🐳 Local Docker Environment**
 
-Rapid Rebuilds: Layered Dockerfile instructions strategically to maximize Docker's internal caching mechanism.
+- **Optimized Image Size:** Configured multi-stage builds to strictly separate the development/build environment from the final production image.
+- **Rapid Rebuilds:** Layered Dockerfile instructions strategically to maximize Docker's internal caching mechanism.
+- **Developer Experience (DX):** Integrated volume bind mounts via `docker-compose.yml` to enable instant code reloading without rebuilding containers.
+- **Isolated Networking:** Deployed a custom bridge network (`my-net`) for secure and isolated container-to-container communication.
 
-Developer Experience (DX): Integrated volume bind mounts via docker-compose.yml to enable instant code reloading without rebuilding containers.
+**☁️ AWS Cloud Deployment**
 
-Isolated Networking: Deployed a custom bridge network (my-net) for secure and isolated container-to-container communication.
+- **Container Registry:** Built and pushed the optimized Docker image to Amazon ECR.
+- **Container Orchestration:** Deployed the application using AWS ECS with custom Task Definitions to manage the container lifecycle.
+- **Environment Management:** Dynamically injected environment variables (e.g., `PORT=3000`) securely through ECS Task revisions.
+- **Traffic Management & Health Checks:** Configured an Application Load Balancer (ALB) and Target Groups with active health checks to seamlessly route internet traffic (Port 80) to the application containers (Port 3000).
 
-☁️ AWS Cloud Deployment
+## 🚀 Quick Start (Local Development)
 
-Container Registry: Built and pushed the optimized Docker image to Amazon ECR.
-
-Container Orchestration: Deployed the application using AWS ECS with custom Task Definitions to manage the container lifecycle.
-
-Environment Management: Dynamically injected environment variables (e.g., PORT=3000) securely through ECS Task revisions.
-
-Traffic Management & Health Checks: Configured an Application Load Balancer (ALB) and Target Groups with active health checks to seamlessly route internet traffic (Port 80) to the application containers (Port 3000).
-
-🚀 Quick Start (Local Development)
-Bash
-
+```bash
 # Clone and spin up the environment
-
 git clone [https://github.com/Akshitguptaji/docker-node-fundamentals.git](https://github.com/Akshitguptaji/docker-node-fundamentals.git)
-cd repo-name
+cd docker-node-fundamentals
 
 # Run the container in detached mode
-
 docker compose up -d
+```
 
 📸 Live Deployment Proof
 ![AWS ECS Output](screenshot.png)
