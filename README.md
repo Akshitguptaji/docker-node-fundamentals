@@ -49,3 +49,7 @@ cd repo-name
 # Run the container in detached mode
 
 docker compose up -d
+
+## 📸 Live Deployment Proof
+
+![AWS ECS Output](screenshot.png)
